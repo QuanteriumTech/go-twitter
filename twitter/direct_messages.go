@@ -87,6 +87,14 @@ func newDirectMessageService(sling *sling.Sling) *DirectMessageService {
 	}
 }
 
+// MediaDownload downloads media attached to a status*
+// Requires a user auth context with DM scope.
+// https://developer.twitter.com/en/docs/direct-messages/message-attachments/guides/retrieving-media
+func (s *DirectMessageService) MediaDownload(url string) (*http.Response, error) {
+	resp, err := s.baseSling.New().Get(url).Receive(nil, nil)
+	return resp, err
+}
+
 // DirectMessageEventsNewParams are the parameters for
 // DirectMessageService.EventsNew
 type DirectMessageEventsNewParams struct {
